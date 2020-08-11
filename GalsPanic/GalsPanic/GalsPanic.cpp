@@ -10,7 +10,6 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 // >> :
-
 // 플레이어
 class Circle										
 {
@@ -34,8 +33,6 @@ vector<POINT> BasicPoint;
 vector<POINT>::iterator Bit;
 vector<POINT> PaintPoint;
 vector<POINT>::iterator Pit;
-
-
 
 int OnEdge(POINT p, vector<POINT> polygon);
 int OnEdge(int x, int y, vector<POINT> polygon);
@@ -98,7 +95,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HDC			hdc;
 	PAINTSTRUCT ps;
-	static Circle Circle;
+	static Circle Player;
 	static int Node;
     switch (message)
     {
@@ -109,8 +106,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		BasicPoint.push_back({ 550,250 });
 		BasicPoint.push_back({ 550,450 });
 		BasicPoint.push_back({ 350,450 });
-		Circle.cirPoint.x = BasicPoint[0].x;
-		Circle.cirPoint.y = BasicPoint[0].y;
+		Player.cirPoint.x = BasicPoint[0].x;
+		Player.cirPoint.y = BasicPoint[0].y;
 		break;
     case WM_COMMAND:
         {
@@ -127,44 +124,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//if (wParam == VK_RIGHT)
 		if (wParam == VK_RIGHT)
 		{
-			Node = AtNode(Circle.cirPoint, BasicPoint);
+			Node = AtNode(Player.cirPoint, BasicPoint);
 			if (Node != -1)
 			{
-				if (AtNode(Circle.cirPoint.x + 2, Circle.cirPoint.y, BasicPoint) != -1)
+				if (AtNode(Player.cirPoint.x + 2, Player.cirPoint.y, BasicPoint) != -1)
 				{
-					Circle.cirPoint.x += 2;
-					Node = AtNode(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.x += 2;
+					Node = AtNode(Player.cirPoint, BasicPoint);
 				}
-				else if (OnEdge(Circle.cirPoint.x + 2, Circle.cirPoint.y, BasicPoint) != -1)
+				else if (OnEdge(Player.cirPoint.x + 2, Player.cirPoint.y, BasicPoint) != -1)
 				{
-					Circle.cirPoint.x += 2;
-					Node = OnEdge(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.x += 2;
+					Node = OnEdge(Player.cirPoint, BasicPoint);
 				}
-				else if (!(DotInFigure(Circle.cirPoint.x + 2, Circle.cirPoint.y, BasicPoint)))
+				else if (!(DotInFigure(Player.cirPoint.x + 2, Player.cirPoint.y, BasicPoint)))
 				{
-					PaintPoint.push_back(Circle.cirPoint);
-					Circle.cirPoint.x += 2;
+					PaintPoint.push_back(Player.cirPoint);
+					Player.cirPoint.x += 2;
 					StPEnP[0] = Node;
 				}
 			}
 			else
 			{
-				Node = OnEdge(Circle.cirPoint, BasicPoint);
+				Node = OnEdge(Player.cirPoint, BasicPoint);
 				if (Node != -1)
 				{
-					if (AtNode(Circle.cirPoint.x + 2, Circle.cirPoint.y, BasicPoint) != -1)
+					if (AtNode(Player.cirPoint.x + 2, Player.cirPoint.y, BasicPoint) != -1)
 					{
-						Circle.cirPoint.x += 2;
-						Node = AtNode(Circle.cirPoint, BasicPoint);
+						Player.cirPoint.x += 2;
+						Node = AtNode(Player.cirPoint, BasicPoint);
 					}
-					else if (OnEdge(Circle.cirPoint.x + 2, Circle.cirPoint.y, BasicPoint) != -1)
+					else if (OnEdge(Player.cirPoint.x + 2, Player.cirPoint.y, BasicPoint) != -1)
 					{
-						Circle.cirPoint.x += 2;
+						Player.cirPoint.x += 2;
 					}
-					else if (!(DotInFigure(Circle.cirPoint.x + 2, Circle.cirPoint.y, BasicPoint)))
+					else if (!(DotInFigure(Player.cirPoint.x + 2, Player.cirPoint.y, BasicPoint)))
 					{
-						PaintPoint.push_back(Circle.cirPoint);
-						Circle.cirPoint.x += 2;
+						PaintPoint.push_back(Player.cirPoint);
+						Player.cirPoint.x += 2;
 						StPEnP[0] = Node;
 					}
 				}
@@ -172,44 +169,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else if (wParam == VK_DOWN)
 		{
-			Node = AtNode(Circle.cirPoint, BasicPoint);
+			Node = AtNode(Player.cirPoint, BasicPoint);
 			if (Node != -1)
 			{
-				if (AtNode(Circle.cirPoint.x, Circle.cirPoint.y+2, BasicPoint) != -1)
+				if (AtNode(Player.cirPoint.x, Player.cirPoint.y+2, BasicPoint) != -1)
 				{
-					Circle.cirPoint.y += 2;
-					Node = AtNode(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.y += 2;
+					Node = AtNode(Player.cirPoint, BasicPoint);
 				}
-				else if (OnEdge(Circle.cirPoint.x, Circle.cirPoint.y+2, BasicPoint) != -1)
+				else if (OnEdge(Player.cirPoint.x, Player.cirPoint.y+2, BasicPoint) != -1)
 				{
-					Circle.cirPoint.y += 2;
-					Node = OnEdge(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.y += 2;
+					Node = OnEdge(Player.cirPoint, BasicPoint);
 				}
-				else if (!(DotInFigure(Circle.cirPoint.x, Circle.cirPoint.y+2, BasicPoint)))
+				else if (!(DotInFigure(Player.cirPoint.x, Player.cirPoint.y+2, BasicPoint)))
 				{
-					PaintPoint.push_back(Circle.cirPoint);
-					Circle.cirPoint.y += 2;
+					PaintPoint.push_back(Player.cirPoint);
+					Player.cirPoint.y += 2;
 					StPEnP[0] = Node;
 				}
 			}
 			else
 			{
-				Node = OnEdge(Circle.cirPoint, BasicPoint);
+				Node = OnEdge(Player.cirPoint, BasicPoint);
 				if (Node != -1)
 				{
-					if (AtNode(Circle.cirPoint.x, Circle.cirPoint.y+2, BasicPoint) != -1)
+					if (AtNode(Player.cirPoint.x, Player.cirPoint.y+2, BasicPoint) != -1)
 					{
-						Circle.cirPoint.y += 2;
-						Node = AtNode(Circle.cirPoint, BasicPoint);
+						Player.cirPoint.y += 2;
+						Node = AtNode(Player.cirPoint, BasicPoint);
 					}
-					else if (OnEdge(Circle.cirPoint.x, Circle.cirPoint.y+2, BasicPoint) != -1)
+					else if (OnEdge(Player.cirPoint.x, Player.cirPoint.y+2, BasicPoint) != -1)
 					{
-						Circle.cirPoint.y += 2;
+						Player.cirPoint.y += 2;
 					}
-					else if (!(DotInFigure(Circle.cirPoint.x, Circle.cirPoint.y+2, BasicPoint)))
+					else if (!(DotInFigure(Player.cirPoint.x, Player.cirPoint.y+2, BasicPoint)))
 					{
-						PaintPoint.push_back(Circle.cirPoint);
-						Circle.cirPoint.y += 2;
+						PaintPoint.push_back(Player.cirPoint);
+						Player.cirPoint.y += 2;
 						StPEnP[0] = Node;
 					}
 				}
@@ -217,44 +214,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else if (wParam == VK_UP)
 		{
-			Node = AtNode(Circle.cirPoint, BasicPoint);
+			Node = AtNode(Player.cirPoint, BasicPoint);
 			if (Node != -1)
 			{
-				if (AtNode(Circle.cirPoint.x, Circle.cirPoint.y - 2, BasicPoint) != -1)
+				if (AtNode(Player.cirPoint.x, Player.cirPoint.y - 2, BasicPoint) != -1)
 				{
-					Circle.cirPoint.y -= 2;
-					Node = AtNode(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.y -= 2;
+					Node = AtNode(Player.cirPoint, BasicPoint);
 				}
-				else if (OnEdge(Circle.cirPoint.x, Circle.cirPoint.y - 2, BasicPoint) != -1)
+				else if (OnEdge(Player.cirPoint.x, Player.cirPoint.y - 2, BasicPoint) != -1)
 				{
-					Circle.cirPoint.y -= 2;
-					Node = OnEdge(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.y -= 2;
+					Node = OnEdge(Player.cirPoint, BasicPoint);
 				}
-				else if (!(DotInFigure(Circle.cirPoint.x, Circle.cirPoint.y - 2, BasicPoint)))
+				else if (!(DotInFigure(Player.cirPoint.x, Player.cirPoint.y - 2, BasicPoint)))
 				{
-					PaintPoint.push_back(Circle.cirPoint);
-					Circle.cirPoint.y -= 2;
+					PaintPoint.push_back(Player.cirPoint);
+					Player.cirPoint.y -= 2;
 					StPEnP[0] = Node;
 				}
 			}
 			else  
 			{
-				Node = OnEdge(Circle.cirPoint, BasicPoint);
+				Node = OnEdge(Player.cirPoint, BasicPoint);
 				if (Node != -1)
 				{
-					if (AtNode(Circle.cirPoint.x, Circle.cirPoint.y - 2, BasicPoint) != -1)
+					if (AtNode(Player.cirPoint.x, Player.cirPoint.y - 2, BasicPoint) != -1)
 					{
-						Circle.cirPoint.y -= 2;
-						Node = AtNode(Circle.cirPoint, BasicPoint);
+						Player.cirPoint.y -= 2;
+						Node = AtNode(Player.cirPoint, BasicPoint);
 					}
-					else if (OnEdge(Circle.cirPoint.x, Circle.cirPoint.y - 2, BasicPoint) != -1)
+					else if (OnEdge(Player.cirPoint.x, Player.cirPoint.y - 2, BasicPoint) != -1)
 					{
-						Circle.cirPoint.y -= 2;
+						Player.cirPoint.y -= 2;
 					}
-					else if (!(DotInFigure(Circle.cirPoint.x, Circle.cirPoint.y - 2, BasicPoint)))
+					else if (!(DotInFigure(Player.cirPoint.x, Player.cirPoint.y - 2, BasicPoint)))
 					{
-						PaintPoint.push_back(Circle.cirPoint);
-						Circle.cirPoint.y -= 2;
+						PaintPoint.push_back(Player.cirPoint);
+						Player.cirPoint.y -= 2;
 						StPEnP[0] = Node;
 					}
 				}
@@ -262,44 +259,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else if (wParam == VK_LEFT)
 		{
-			Node = AtNode(Circle.cirPoint, BasicPoint);
+			Node = AtNode(Player.cirPoint, BasicPoint);
 			if (Node != -1)
 			{
-				if (AtNode(Circle.cirPoint.x - 2, Circle.cirPoint.y, BasicPoint) != -1)
+				if (AtNode(Player.cirPoint.x - 2, Player.cirPoint.y, BasicPoint) != -1)
 				{
-					Circle.cirPoint.x -= 2;
-					Node = AtNode(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.x -= 2;
+					Node = AtNode(Player.cirPoint, BasicPoint);
 				}
-				else if (OnEdge(Circle.cirPoint.x - 2, Circle.cirPoint.y, BasicPoint) != -1)
+				else if (OnEdge(Player.cirPoint.x - 2, Player.cirPoint.y, BasicPoint) != -1)
 				{
-					Circle.cirPoint.x -= 2;
-					Node = OnEdge(Circle.cirPoint, BasicPoint);
+					Player.cirPoint.x -= 2;
+					Node = OnEdge(Player.cirPoint, BasicPoint);
 				}
-				else if (!(DotInFigure(Circle.cirPoint.x - 2, Circle.cirPoint.y, BasicPoint)))
+				else if (!(DotInFigure(Player.cirPoint.x - 2, Player.cirPoint.y, BasicPoint)))
 				{
-					PaintPoint.push_back(Circle.cirPoint);
-					Circle.cirPoint.x -= 2;
+					PaintPoint.push_back(Player.cirPoint);
+					Player.cirPoint.x -= 2;
 					StPEnP[0] = Node;
 				}
 			}
 			else  
 			{
-				Node = OnEdge(Circle.cirPoint, BasicPoint);
+				Node = OnEdge(Player.cirPoint, BasicPoint);
 				if (Node != -1)
 				{
-					if (AtNode(Circle.cirPoint.x - 2, Circle.cirPoint.y, BasicPoint) != -1)
+					if (AtNode(Player.cirPoint.x - 2, Player.cirPoint.y, BasicPoint) != -1)
 					{
-						Circle.cirPoint.x -= 2;
-						Node = AtNode(Circle.cirPoint, BasicPoint);
+						Player.cirPoint.x -= 2;
+						Node = AtNode(Player.cirPoint, BasicPoint);
 					}
-					else if (OnEdge(Circle.cirPoint.x - 2, Circle.cirPoint.y, BasicPoint) != -1)
+					else if (OnEdge(Player.cirPoint.x - 2, Player.cirPoint.y, BasicPoint) != -1)
 					{
-						Circle.cirPoint.x -= 2;
+						Player.cirPoint.x -= 2;
 					}
-					else if (!(DotInFigure(Circle.cirPoint.x - 2, Circle.cirPoint.y, BasicPoint)))
+					else if (!(DotInFigure(Player.cirPoint.x - 2, Player.cirPoint.y, BasicPoint)))
 					{
-						PaintPoint.push_back(Circle.cirPoint);
-						Circle.cirPoint.x -= 2;
+						PaintPoint.push_back(Player.cirPoint);
+						Player.cirPoint.x -= 2;
 						StPEnP[0] = Node;
 					}
 				}
@@ -311,9 +308,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             hdc = BeginPaint(hWnd, &ps);
 			Polygon(hdc, &BasicPoint[0], BasicPoint.size());
-			DrawCircle(hdc, Circle.cirPoint, Circle.radius);
-			TextOut(hdc, 720, 10, to_wstring(Circle.cirPoint.x).c_str(), _tcslen(to_wstring(Circle.cirPoint.x).c_str()));
-			TextOut(hdc, 720, 30, to_wstring(Circle.cirPoint.y).c_str(), _tcslen(to_wstring(Circle.cirPoint.y).c_str()));
+			DrawCircle(hdc, Player.cirPoint, Player.radius);
+			TextOut(hdc, 720, 10, to_wstring(Player.cirPoint.x).c_str(), _tcslen(to_wstring(Player.cirPoint.x).c_str()));
+			TextOut(hdc, 720, 30, to_wstring(Player.cirPoint.y).c_str(), _tcslen(to_wstring(Player.cirPoint.y).c_str()));
 			TextOut(hdc, 720, 50, to_wstring(Node).c_str(), _tcslen(to_wstring(Node).c_str()));
 			TextOut(hdc, 650, 70, _T("출발점 : "), 5);
 			TextOut(hdc, 720, 70, to_wstring(StPEnP[0]).c_str(), _tcslen(to_wstring(StPEnP[0]).c_str()));
@@ -410,6 +407,7 @@ int DotState(int x, int y, vector<POINT> polygon)
 }
 bool MOVE(int start, int end)
 {
+
 	switch (start)
 	{
 	case 0:	// 꼭지점 출발			
@@ -485,7 +483,6 @@ int Edge(POINT p, vector<POINT> polygon)
 		}
 	}
 }
-
 int OnEdge(POINT p, vector<POINT> polygon)
 {
 	int pedge = -1;
